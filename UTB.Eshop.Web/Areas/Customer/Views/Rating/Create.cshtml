@@ -1,0 +1,43 @@
+﻿@model RatingViewModel
+@using UTB.Eshop.Web.Controllers;
+@{
+    ViewData["Title"] = "Rating";
+}
+<h1>@ViewData["Title"]</h1>
+
+@{ 
+    ViewBag.Action = nameof(RatingController.Create);
+}
+
+@{ 
+    if(String.IsNullOrWhiteSpace(ViewBag.Action) == false)
+            {
+                <form asp-action="@ViewBag.Action" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="Rating.ProductID" class="form-control" value="@Model.Product.ID"/>
+                    <div class="form-group">
+                        <label asp-for="Rating.Stars" class="control-label"></label>
+                        <input type="range" asp-for="Rating.Stars" class ="form-control" min="1" max="5" oninput="this.nextElementSibling.value = this.value">
+                        <output>3</output>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Rating.Comment">Comment</label>
+                        <input id="comment" asp-for="Rating.Comment" class="form-control-file" type="text" placeholder="Enter your review">
+                        <span asp-validation-for="Rating.Comment" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                
+            }
+}
+
+@section Scripts {
+    <script src="https://use.fontawesome.com/d22191e81c.js"></script>
+    <script src="~/js~/js/Detail.js"></script>
+    <environment include="Development">
+        <script src="~/js/Product.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/Product.min.js"></script>
+    </environment> 
+}
